@@ -1,8 +1,10 @@
-# Usar uma imagem oficial do PHP
+# Usar uma imagem oficial do PHP com suporte ao PostgreSQL
 FROM php:8.1-cli
 
-# Instalar o SQLite
-RUN docker-php-ext-install pdo pdo_sqlite
+# Instalar extensões PHP necessárias para o PostgreSQL
+RUN apt-get update \
+    && apt-get install -y libpq-dev \
+    && docker-php-ext-install pdo pdo_pgsql
 
 # Instalar o Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
